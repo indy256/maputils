@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MyMaps</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8"/>
+    <meta name="description" content="Maps aggregator and utils"/>
+    <meta name="keywords" content="OpenStreetMaps Google Bing Yandex Maps"/>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,500&subset=latin,cyrillic"
+          type="text/css" media="all">
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="css/jquery-ui.min.css">
+    <script src="js/jquery-ui.min.js"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
+    <script src="//maps.google.com/maps/api/js?v=3&sensor=false"></script>
+    <script src="//api-maps.yandex.ru/2.0/?load=package.map&lang=ru-RU" type="text/javascript"></script>
+    <script src="js/maps/Google.js"></script>
+    <script src="js/maps/Yandex.js"></script>
+    <script src="js/maps/Bing.js"></script>
+
+    <link rel="stylesheet" href="css/geosearch/l.geosearch.css"/>
+    <script src="js/geosearch/l.control.geosearch.js"></script>
+    <script src="js/geosearch/l.geosearch.provider.openstreetmap.js"></script>
+    <script src="js/geosearch/l.geosearch.provider.google.js"></script>
+    <script src="js/geosearch/l.geosearch.provider.esri.js"></script>
+
+    <script src="js/common.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            function setHeight() {
+                $('#mapdiv').height($(window).height() - 20);
+            }
+
+            setHeight();
+            $(window).resize(function () {
+                setHeight();
+            });
+
+            var map = L.map('mapdiv', {center: [52.51667, 13.38333], zoom: 10});
+            addMapSelector(map);
+            new L.Control.GeoSearch({
+                provider: new L.GeoSearch.Provider.Google(),
+                searchLabel: "Enter address...",
+                zoomLevel: 17
+            }).addTo(map);
+
+            function setPosition(position) {
+                map.setView([position.coords.latitude, position.coords.longitude]);
+            }
+
+            navigator.geolocation.getCurrentPosition(setPosition);
+        });
+    </script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-75651673-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+<div id="mapdiv"></div>
+</body>
+</html>
